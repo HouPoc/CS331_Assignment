@@ -82,7 +82,7 @@ def read_source (file):
     state = []
     for line in f:
         if line is not None:
-            state.append(map(int, line))
+            state.append(map(int, line.split(',')))
     return state_node(state[0],state[1])
     
 
@@ -134,15 +134,12 @@ def DFS(initial, goal, explored):
 
 def IDDFS(initial, goal, explored):
     for depth in range(100):
-        result = R_DLS(initial, goal, depth, explored)
+        result = R_DLS(initial, goal, 35, explored)
         if result != 'cutoff': 
             return result
 
 
-def R_DLS(node, goal, limit, explored):
-    if is_not_in(node, explored):
-        explored.append(node)
-    
+def R_DLS(node, goal, limit, explored): 
     if goal_test(node, goal):
         return node
     elif limit == 0:
@@ -151,7 +148,7 @@ def R_DLS(node, goal, limit, explored):
         cutoff_occurred = False
         child_nodes = child_node(node)
         for child in child_nodes:
-            result = R_DLS(child, goal, limit - 1, explored)
+        	result = R_DLS(child, goal, limit - 1, explored)
             if result == 'cutoff':
                 cutoff_occurred = True
             elif result is not None:
@@ -160,8 +157,7 @@ def R_DLS(node, goal, limit, explored):
         if cutoff_occurred:
             return 'cutoff'
         else:
-            return None            
-    
+            return None 
 
 def out_solution (file, path, num_expand):
     f = open(file, 'w')

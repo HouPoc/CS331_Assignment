@@ -16,7 +16,7 @@ def main():
     #print (goal_test(initial,goal))
     result = BFS(initial, goal, explored)
     print (path(result))
-    #print (result)
-
+    print (len(explored))
+    out_solution('solution.txt', path(result), len(explored))
 if __name__ == '__main__':
     main()

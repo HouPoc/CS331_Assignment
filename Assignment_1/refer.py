@@ -114,6 +114,61 @@ def BFS(initial, goal, explored):
                 frontier.append(child)
         #index +=1
     return False
+
+def DFS(initial, goal, explored):
+    current = initial
+    if goal_test(current, goal):
+        return current
+    
+    frontier = [current]
+    while len(frontier) != 0:
+        current = frontier.pop() 
+        explored.append(current)
+        child_nodes = child_node(current)
+        for child in child_nodes:
+            if is_not_in(child, frontier) and is_not_in(child, explored):
+                if goal_test(child, goal):
+                    return child
+                frontier.append(child)
+
+
+def IDDFS(initial, goal, explored):
+    for depth in range(100):
+        result = R_DLS(initial, goal, depth, explored)
+        if result != 'cutoff': 
+            return result
+
+
+def R_DLS(node, goal, limit, explored):
+    if is_not_in(node, explored):
+        explored.append(node)
+    
+    if goal_test(node, goal):
+        return node
+    elif limit == 0:
+        return 'cutoff'
+    else:
+        cutoff_occurred = False
+        child_nodes = child_node(node)
+        for child in child_nodes:
+            result = R_DLS(child, goal, limit - 1, explored)
+            if result == 'cutoff':
+                cutoff_occurred = True
+            elif result is not None:
+                return result
+
+        if cutoff_occurred:
+            return 'cutoff'
+        else:
+            return None            
+    
+
+def out_solution (file, path, num_expand):
+    f = open(file, 'w')
+    for state in path:   
+        f.write('Left Bank: ' + str(state[0][0]) + ' missionaries, ' + str(state[0][1]) + ' cannibal, '+ str(state[0][2]) + ' boat ' + ' Right Bank: ' + str(state[1][0]) + ' missionaries, ' + str(state[1][1]) + ' cannibals, ' + str(state[1][2]) + ' boat\n')
+    f.write("The number of explored node is " + str(num_expand) + '\n')
+    f.close()
                
     
     

@@ -164,7 +164,7 @@ def R_DLS(node, goal, limit, explored):
             return None
 
 
-def A_START(initial, goal, explored):
+def A_STAR(initial, goal, explored):
     frontier = [initial]
     while len(frontier) != 0:
         current = frontier.pop(0)        # pop the first element from priority queue

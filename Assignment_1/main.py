@@ -19,7 +19,7 @@ def main():
     elif mode == '3':
         result = IDDFS(initial, goal, explored)
     elif mode == '4':
-        result = A_STATR(initial, goal, explored)
+        result = A_STAR(initial, goal, explored)
     else:
         print 'Error'
 	

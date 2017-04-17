@@ -1,4 +1,5 @@
 import sys
+import operator
 
 class state_node ():
     
@@ -165,10 +166,11 @@ def R_DLS(node, goal, limit, explored):
 
 
 def A_STAR(initial, goal, explored):
+    initial.f_value = 0 + heuristic(initial, goal)
     frontier = [initial]
     while len(frontier) != 0:
-        current = frontier.pop(0)        # pop the first element from priority queue
-        if is_not_in(current, goal):
+        current = frontier.pop(0)
+        if goal_test(current, goal):
             return current
         explored.append(current)
         child_nodes = child_node(current)
@@ -178,16 +180,19 @@ def A_STAR(initial, goal, explored):
     return False
 
 
-del store_priority_list(node, initial, goal, froniter):
+def store_priority_list(node, initial, goal, frontier):
     node.f_value = post_cost(node, initial) + heuristic(node, goal)
+    frontier.append(node)
+    frontier.sort(key = operator.attrgetter('f_value'))
 
 
-del heuristic(node, goal):
+def heuristic(node, goal):
     return (goal.left_bank[0] - node.left_bank[0]) + (goal.left_bank[1] - node.left_bank[1])
 
 
-del post_cost(node, initial):
+def post_cost(node, initial):
     return len(path(node))
+
 
 def out_solution (file, path, num_expand):
     f = open(file, 'w')

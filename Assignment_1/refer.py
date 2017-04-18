@@ -103,10 +103,16 @@ def path (terminate_state):
         node = node.parent
     return route
    
-def BFS(initial, goal, explored):
-    frontier = [initial]
+def BFS(initial, goal, expand):
+    current = initial
+    if goal_test(current, goal):
+        return current
+
+    frontier = [current]
+    explored = []
     while len(frontier) != 0:
         current = frontier.pop(0)
+        expand.append(current)
         explored.append(current)
         child_nodes = child_node(current)
         for child in child_nodes:
@@ -114,17 +120,18 @@ def BFS(initial, goal, explored):
                 if goal_test(child,goal):
                     return child
                 frontier.append(child)
-        #index +=1
     return False
 
-def DFS(initial, goal, explored):
+def DFS(initial, goal, expand):
     current = initial
     if goal_test(current, goal):
         return current
     
     frontier = [current]
+    explored = []
     while len(frontier) != 0:
-        current = frontier.pop() 
+        current = frontier.pop()
+        expand.append(current)
         explored.append(current)
         child_nodes = child_node(current)
         for child in child_nodes:
@@ -132,28 +139,29 @@ def DFS(initial, goal, explored):
                 if goal_test(child, goal):
                     return child
                 frontier.append(child)
+    return False
 
 
-def IDDFS(initial, goal, explored):
+def IDDFS(initial, goal, expand):
     for depth in range(1000):
-    	temp = []
-    	result = R_DLS(initial, goal, depth, temp)
+    	explored = []
+    	result = R_DLS(initial, goal, depth, explored, expand)
     	if result != 'cutoff':
-        	explored = temp
         	return result
 
-def R_DLS(node, goal, limit, explored):
-    explored.append(node)
-    if goal_test(node, goal):
-        return node
+def R_DLS(current, goal, limit, explored, expand):
+    explored.append(current)
+    if goal_test(current, goal):
+        return current
     elif limit == 0:
         return 'cutoff'
     else:
         cutoff_occurred = False
-        child_nodes = child_node(node)
+        expand.append(current)
+        child_nodes = child_node(current)
         for child in child_nodes:
             if is_not_in(child, explored):
-                result = R_DLS(child, goal, limit - 1, explored)
+                result = R_DLS(child, goal, limit - 1, explored, expand)
                 if result == 'cutoff':
                     cutoff_occurred = True
                 elif result is not None:
@@ -165,11 +173,13 @@ def R_DLS(node, goal, limit, explored):
             return None
 
 
-def A_STAR(initial, goal, explored):
+def A_STAR(initial, goal, expand):
+    explored = []
     initial.f_value = 0 + heuristic(initial, goal)
     frontier = [initial]
     while len(frontier) != 0:
         current = frontier.pop(0)
+        expand.append(current)
         if goal_test(current, goal):
             return current
         explored.append(current)
@@ -194,9 +204,9 @@ def post_cost(node, initial):
     return len(path(node))
 
 
-def out_solution (file, path, num_expand):
+def out_solution (file, path, expand):
     f = open(file, 'w')
     for state in path:   
         f.write('Left Bank: ' + str(state[0][0]) + ' missionaries, ' + str(state[0][1]) + ' cannibal, '+ str(state[0][2]) + ' boat ' + ' Right Bank: ' + str(state[1][0]) + ' missionaries, ' + str(state[1][1]) + ' cannibals, ' + str(state[1][2]) + ' boat\n')
-    f.write("The number of explored node is " + str(num_expand) + '\n')
+    f.write("The number of explored node is " + str(expand) + '\n')
     f.close()

@@ -9,25 +9,24 @@ def main():
     
     initial = read_source(initial_file)
     goal = read_source(goal_file)
-    
-    explored = []
+    expand = []
 
     if mode == '1':
-        result = BFS(initial, goal, explored)
+        result = BFS(initial, goal, expand)
     elif mode == '2':
-        result = DFS(initial, goal, explored)
+        result = DFS(initial, goal, expand)
     elif mode == '3':
-        result = IDDFS(initial, goal, explored)
+        result = IDDFS(initial, goal, expand)
     elif mode == '4':
-        result = A_STAR(initial, goal, explored)
+        result = A_STAR(initial, goal, expand)
     else:
         print 'Error'
 	
     for state in path(result):
         print state
     print len(path(result))
-    print len(explored)
-    out_solution(output_file, path(result), len(explored))
+    print len(expand)
+    out_solution(output_file, path(result), len(expand))
 
 if __name__ == '__main__':
     main()

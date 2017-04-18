@@ -153,31 +153,42 @@ def IDDFS(initial, goal, expand):
     for depth in range(100000):
     	explored = {}
     	frontier = [initial]
-    	print depth
     	result = R_DLS(initial, goal, depth, explored, expand, frontier)
     	if result != 'cutoff':
         	return result
 
 
 def R_DLS(current, goal, limit, explored, expand, frontier):
-    key = create_key(current)
-    explored[key] = current
-    if goal_test(current, goal):
-        return current
-    elif limit == 0:
-        return 'cutoff'
-    else:
-        cutoff_occurred = False
-        expand.append(current)
+	temp = []
+	key = create_key(current)
+	explored[key] = current
+
+	if len(frontier) != 0:
+		frontier.pop(0)
+
+	if goal_test(current, goal):
+		return current
+	elif limit == 0:
+		return 'cutoff'
+	else:
+		cutoff_occurred = False
+		expand.append(current)
         child_nodes = child_node(current)
+        
+        i = 0
         for child in child_nodes:
-            key = create_key(child)
-            if (not explored.has_key(key)):
-                result = R_DLS(child, goal, limit - 1, explored, expand)
-                if result == 'cutoff':
-                    cutoff_occurred = True
-                elif result is not None:
-                    return result
+        	key = create_key(child)
+        	if is_not_in(child, frontier) and (not explored.has_key(key)):
+        		frontier.insert(i, child)
+        		temp.insert(i, child)
+        		i += 1
+
+        for child in temp:
+			result = R_DLS(child, goal, limit - 1, explored, expand, frontier)
+			if result == 'cutoff':
+				cutoff_occurred = True
+			elif result is not None:
+				return result
         
         if cutoff_occurred:
             return 'cutoff'

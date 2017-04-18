@@ -114,7 +114,6 @@ def BFS(initial, goal, expand):
     while len(frontier) != 0:
         current = frontier.pop(0)
         expand.append(current)
-        key = create_key(current)
         explored[create_key(current)] = current
         child_nodes = child_node(current)
         for child in child_nodes:
@@ -135,27 +134,32 @@ def DFS(initial, goal, expand):
     explored = {}
 
     while len(frontier) != 0:
-        current = frontier.pop()
+        current = frontier.pop(0)
         expand.append(current)
         explored[create_key(current)] = current
         child_nodes = child_node(current)
+        i = 0
         for child in child_nodes:
             key = create_key(child)
             if is_not_in(child, frontier) and (not explored.has_key(key)):
                 if goal_test(child,goal):
                     return child
-                frontier.append(child)
+                frontier.insert(i, child)
+                i += 1
     return False
 
 
 def IDDFS(initial, goal, expand):
-    for depth in range(1000):
+    for depth in range(100000):
     	explored = {}
-    	result = R_DLS(initial, goal, depth, explored, expand)
+    	frontier = [initial]
+    	print depth
+    	result = R_DLS(initial, goal, depth, explored, expand, frontier)
     	if result != 'cutoff':
         	return result
 
-def R_DLS(current, goal, limit, explored, expand):
+
+def R_DLS(current, goal, limit, explored, expand, frontier):
     key = create_key(current)
     explored[key] = current
     if goal_test(current, goal):

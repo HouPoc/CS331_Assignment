@@ -109,34 +109,40 @@ def BFS(initial, goal, expand):
         return current
 
     frontier = [current]
-    explored = []
+    explored = {}
+
     while len(frontier) != 0:
         current = frontier.pop(0)
         expand.append(current)
-        explored.append(current)
+        key = create_key(current)
+        explored[create_key(current)] = current
         child_nodes = child_node(current)
         for child in child_nodes:
-            if is_not_in(child, frontier) and is_not_in(child, explored):
+            key = create_key(child)
+            if is_not_in(child, frontier) and (not explored.has_key(key)):
                 if goal_test(child,goal):
                     return child
                 frontier.append(child)
     return False
 
+
 def DFS(initial, goal, expand):
     current = initial
     if goal_test(current, goal):
         return current
-    
+
     frontier = [current]
-    explored = []
+    explored = {}
+
     while len(frontier) != 0:
         current = frontier.pop()
         expand.append(current)
-        explored.append(current)
+        explored[create_key(current)] = current
         child_nodes = child_node(current)
         for child in child_nodes:
-            if is_not_in(child, frontier) and is_not_in(child, explored):
-                if goal_test(child, goal):
+            key = create_key(child)
+            if is_not_in(child, frontier) and (not explored.has_key(key)):
+                if goal_test(child,goal):
                     return child
                 frontier.append(child)
     return False
@@ -144,13 +150,14 @@ def DFS(initial, goal, expand):
 
 def IDDFS(initial, goal, expand):
     for depth in range(1000):
-    	explored = []
+    	explored = {}
     	result = R_DLS(initial, goal, depth, explored, expand)
     	if result != 'cutoff':
         	return result
 
 def R_DLS(current, goal, limit, explored, expand):
-    explored.append(current)
+    key = create_key(current)
+    explored[key] = current
     if goal_test(current, goal):
         return current
     elif limit == 0:
@@ -160,7 +167,8 @@ def R_DLS(current, goal, limit, explored, expand):
         expand.append(current)
         child_nodes = child_node(current)
         for child in child_nodes:
-            if is_not_in(child, explored):
+            key = create_key(child)
+            if (not explored.has_key(key)):
                 result = R_DLS(child, goal, limit - 1, explored, expand)
                 if result == 'cutoff':
                     cutoff_occurred = True
@@ -174,7 +182,7 @@ def R_DLS(current, goal, limit, explored, expand):
 
 
 def A_STAR(initial, goal, expand):
-    explored = []
+    explored = {}
     initial.f_value = 0 + heuristic(initial, goal)
     frontier = [initial]
     while len(frontier) != 0:
@@ -182,10 +190,11 @@ def A_STAR(initial, goal, expand):
         expand.append(current)
         if goal_test(current, goal):
             return current
-        explored.append(current)
+        explored[create_key(current)] = current
         child_nodes = child_node(current)
         for child in child_nodes:
-            if is_not_in(child, frontier) and is_not_in(child, explored):
+            key = create_key(child)
+            if is_not_in(child, frontier) and (not explored.has_key(key)):
                 store_priority_list(child, initial, goal, frontier)
     return False
 
@@ -203,6 +212,8 @@ def heuristic(node, goal):
 def post_cost(node, initial):
     return len(path(node))
 
+def create_key(node):
+    return str(node.left_bank[0]) + str(node.left_bank[1]) + str(node.left_bank[2]) + str(node.right_bank[0]) + str(node.right_bank[1]) + str(node.right_bank[2])
 
 def out_solution (file, path, expand):
     f = open(file, 'w')

@@ -109,12 +109,12 @@ def BFS(initial, goal, expand):
 
     while len(frontier) != 0:
         current = frontier.pop(0)
-        if goal_test(current, goal):
-            return current
         explored[create_key(current)] = current
         expand.append(current)
         child_nodes = child_node(current)
         for child in child_nodes:
+            if goal_test(child, goal):
+                return child
             key = create_key(child)
             if is_not_in(child, frontier) and (not explored.has_key(key)):
                 frontier.append(child)

@@ -207,7 +207,7 @@ def A_STAR(initial, goal, expand):
 
 
 def store_priority_list(node, initial, goal, frontier):
-    node.f_value = post_cost(node, initial) + heuristic(node, goal)
+    node.f_value = path_cost(node) + heuristic(node, goal) 
     frontier.append(node)
     frontier.sort(key = operator.attrgetter('f_value'))
 
@@ -216,8 +216,8 @@ def heuristic(node, goal):
     return (goal.left_bank[0] - node.left_bank[0]) + (goal.left_bank[1] - node.left_bank[1])
 
 
-def post_cost(node, initial):
-    return len(path(node))
+def path_cost(node):
+    return len(path(node)) - 1
 
 
 def create_key(node):

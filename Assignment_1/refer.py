@@ -55,7 +55,7 @@ def child_node(current):
         if check_balance(new_child):
             children.append(new_child) 
     else:
-        # Put one missionary in the boat
+         # Put one missionary in the boat
         new_child = state_node([m_l+1,c_l,b_l+1], [m_r-1,c_r,b_r-1], current)
         if check_balance(new_child):
             children.append(new_child) 
@@ -66,11 +66,11 @@ def child_node(current):
         # Put one cannibal in the boat
         new_child = state_node ([m_l,c_l+1,b_l+1], [m_r,c_r-1,b_r-1], current)
         if check_balance(new_child):
-            children.append(new_child) 
+            children.append(new_child)
         # Put one cannibal and one missionary in the boat
         new_child = state_node([m_l+1,c_l+1,b_l+1], [m_r-1,c_r-1,b_r-1], current)
         if check_balance(new_child):
-            children.append(new_child) 
+            children.append(new_child)  
         # Put two cannibals in the boat
         new_child = state_node([m_l,c_l+2,b_l+1], [m_r,c_r-2,b_r-1], current)
         if check_balance(new_child):
@@ -104,46 +104,38 @@ def path (terminate_state):
     return route
    
 def BFS(initial, goal, expand):
-    current = initial
-    if goal_test(current, goal):
-        return current
-
-    frontier = [current]
+    frontier = [initial]
     explored = {}
 
     while len(frontier) != 0:
         current = frontier.pop(0)
-        expand.append(current)
+        if goal_test(current, goal):
+            return current
         explored[create_key(current)] = current
+        expand.append(current)
         child_nodes = child_node(current)
         for child in child_nodes:
             key = create_key(child)
             if is_not_in(child, frontier) and (not explored.has_key(key)):
-                if goal_test(child,goal):
-                    return child
                 frontier.append(child)
     return False
 
 
 def DFS(initial, goal, expand):
-    current = initial
-    if goal_test(current, goal):
-        return current
-
-    frontier = [current]
+    frontier = [initial]
     explored = {}
 
     while len(frontier) != 0:
         current = frontier.pop(0)
-        expand.append(current)
+        if goal_test(current, goal):
+            return current
         explored[create_key(current)] = current
+        expand.append(current)
         child_nodes = child_node(current)
         i = 0
         for child in child_nodes:
             key = create_key(child)
             if is_not_in(child, frontier) and (not explored.has_key(key)):
-                if goal_test(child,goal):
-                    return child
                 frontier.insert(i, child)
                 i += 1
     return False
@@ -202,9 +194,9 @@ def A_STAR(initial, goal, expand):
     frontier = [initial]
     while len(frontier) != 0:
         current = frontier.pop(0)
-        expand.append(current)
         if goal_test(current, goal):
             return current
+        expand.append(current)
         explored[create_key(current)] = current
         child_nodes = child_node(current)
         for child in child_nodes:

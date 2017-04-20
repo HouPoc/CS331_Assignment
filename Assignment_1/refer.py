@@ -219,12 +219,18 @@ def heuristic(node, goal):
 def post_cost(node, initial):
     return len(path(node))
 
+
 def create_key(node):
     return str(node.left_bank[0]) + str(node.left_bank[1]) + str(node.left_bank[2]) + str(node.right_bank[0]) + str(node.right_bank[1]) + str(node.right_bank[2])
 
+
 def out_solution (file, path, expand):
     f = open(file, 'w')
-    for state in path:   
-        f.write('Left Bank: ' + str(state[0][0]) + ' missionaries, ' + str(state[0][1]) + ' cannibal, '+ str(state[0][2]) + ' boat ' + ' Right Bank: ' + str(state[1][0]) + ' missionaries, ' + str(state[1][1]) + ' cannibals, ' + str(state[1][2]) + ' boat\n')
-    f.write("The number of explored node is " + str(expand) + '\n')
+    if len(path) != 0:
+        for state in path:   
+            f.write('Left Bank: ' + str(state[0][0]) + ' missionaries, ' + str(state[0][1]) + ' cannibal, '+ str(state[0][2]) + ' boat ' + ' Right Bank: ' + str(state[1][0]) + ' missionaries, ' + str(state[1][1]) + ' cannibals, ' + str(state[1][2]) + ' boat\n')
+        f.write('The number of nodes on solution is ' + str(len(path)) + '\n')
+    else:
+        f.write('No solution found\n')     
+    f.write('The number of explored node is ' + str(expand) + '\n')
     f.close()

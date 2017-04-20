@@ -11,21 +11,26 @@ def main():
     goal = read_source(goal_file)
     expand = []
 
-    if mode == '1':
+    if mode == 'bfs':
         result = BFS(initial, goal, expand)
-    elif mode == '2':
+    elif mode == 'dfs':
         result = DFS(initial, goal, expand)
-    elif mode == '3':
+    elif mode == 'iddfs':
         result = IDDFS(initial, goal, expand)
-    elif mode == '4':
+    elif mode == 'astar':
         result = A_STAR(initial, goal, expand)
     else:
         print 'Error'
 	
-    for state in path(result):
-        print state
-    print len(path(result))
-    print len(expand)
+    if len(path(result)) != 0:
+        print 'The path is:'
+        for state in path(result):
+            print 'left bank: ' + str(state[0]) + ' ' + 'right bank:' + str(state[1])
+        print 'The number of nodes on solution is ' + str(len(path(result)))
+    else:
+        print 'No solution found!'
+
+    print 'The number of explored node is ' + str(len(expand))
     out_solution(output_file, path(result), len(expand))
 
 if __name__ == '__main__':

@@ -30,7 +30,7 @@ def main():
     else:
         print 'No solution found!'
 
-    print 'The number of explored node is ' + str(len(expand))
+    print 'The number of nodes expanded is ' + str(len(expand))
     out_solution(output_file, path(result), len(expand))
 
 if __name__ == '__main__':

@@ -34,7 +34,7 @@ def child_node(current):
     b_r = current.right_bank[2]
 
     if b_l == 1:
-        # Put one missionary in the boat
+# Put one missionary in the boat
         new_child = state_node ([m_l-1,c_l,b_l-1], [m_r+1,c_r,b_r+1], current)
         if check_balance(new_child):
             children.append(new_child)  
@@ -75,7 +75,7 @@ def child_node(current):
         new_child = state_node([m_l,c_l+2,b_l+1], [m_r,c_r-2,b_r-1], current)
         if check_balance(new_child):
             children.append(new_child)
-
+ 
     return children
 
             
@@ -232,5 +232,5 @@ def out_solution (file, path, expand):
         f.write('The number of nodes on solution is ' + str(len(path)) + '\n')
     else:
         f.write('No solution found\n')     
-    f.write('The number of explored node is ' + str(expand) + '\n')
+    f.write('The number of nodes expanded is ' + str(expand) + '\n')
     f.close()

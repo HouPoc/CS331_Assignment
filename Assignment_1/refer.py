@@ -34,7 +34,7 @@ def child_node(current):
     b_r = current.right_bank[2]
 
     if b_l == 1:
-# Put one missionary in the boat
+		# Put one missionary in the boat
         new_child = state_node ([m_l-1,c_l,b_l-1], [m_r+1,c_r,b_r+1], current)
         if check_balance(new_child):
             children.append(new_child)  

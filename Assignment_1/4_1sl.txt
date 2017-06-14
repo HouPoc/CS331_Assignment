@@ -1,0 +1,14 @@
+Left Bank: 0 missionaries, 0 cannibal, 0 boat  Right Bank: 3 missionaries, 3 cannibals, 1 boat
+Left Bank: 1 missionaries, 1 cannibal, 1 boat  Right Bank: 2 missionaries, 2 cannibals, 0 boat
+Left Bank: 0 missionaries, 1 cannibal, 0 boat  Right Bank: 3 missionaries, 2 cannibals, 1 boat
+Left Bank: 0 missionaries, 3 cannibal, 1 boat  Right Bank: 3 missionaries, 0 cannibals, 0 boat
+Left Bank: 0 missionaries, 2 cannibal, 0 boat  Right Bank: 3 missionaries, 1 cannibals, 1 boat
+Left Bank: 2 missionaries, 2 cannibal, 1 boat  Right Bank: 1 missionaries, 1 cannibals, 0 boat
+Left Bank: 1 missionaries, 1 cannibal, 0 boat  Right Bank: 2 missionaries, 2 cannibals, 1 boat
+Left Bank: 3 missionaries, 1 cannibal, 1 boat  Right Bank: 0 missionaries, 2 cannibals, 0 boat
+Left Bank: 3 missionaries, 0 cannibal, 0 boat  Right Bank: 0 missionaries, 3 cannibals, 1 boat
+Left Bank: 3 missionaries, 2 cannibal, 1 boat  Right Bank: 0 missionaries, 1 cannibals, 0 boat
+Left Bank: 2 missionaries, 2 cannibal, 0 boat  Right Bank: 1 missionaries, 1 cannibals, 1 boat
+Left Bank: 3 missionaries, 3 cannibal, 1 boat  Right Bank: 0 missionaries, 0 cannibals, 0 boat
+The number of nodes on solution is 12
+The number of explored node is 13

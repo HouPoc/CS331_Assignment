@@ -1,0 +1,4 @@
+Training Data: preprocessed_train.txt Testing Data: preprocessed_train.txt
+Accuracy: 95.99%
+Training Data: preprocessed_train.txt Testing Data: preprocessed_test.txt
+Accuracy: 76.86%
